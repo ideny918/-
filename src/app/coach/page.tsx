@@ -32,7 +32,7 @@ function Bullets({ items }: { items: string[] }) {
   return (
     <ul className="space-y-3">
       {items.map((t, i) => (
-        <li key={i} className="flex gap-3 text-[13.5px] leading-[1.9] text-ink-soft">
+        <li key={item.id} className="flex gap-3 text-[13.5px] leading-[1.9] text-ink-soft">
           <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-teal" />
           <span>{t}</span>
         </li>
