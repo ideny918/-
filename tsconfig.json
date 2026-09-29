@@ -1,4 +1,4 @@
-"compilerOptions":
+"compilerOptions"
     "target": "ES2017",
     "lib": [
       "dom",
