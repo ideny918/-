@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* 팬톤 11-0515 레몬 아이싱 · 11-4201 클라우드 댄서 · 웜 차콜 잉크 */
+@theme {
+  --color-paper: #f6ebc8;
+  --color-paper-deep: #efe3b5;
+  --color-receipt: #f2f1ec;
+  --color-receipt-alt: #f5f3ea;
+  --color-ink: #2d291f;
+  --color-ink-soft: #5d5951;
+  --color-ink-faint: #7a766c;
+  --color-rule: #ddd8cc;
+  --color-teal: #356d58;
+  --color-teal-soft: #dce9e1;
+  --color-sand: #8b6818;
+  --color-sand-soft: #f1e7c4;
+  --color-sage: #839b79;
+  --color-steel: #6889a5;
+  --color-peri: #9692aa;
+
+  --font-display: "Noto Serif KR", "Nanum Myeongjo", serif;
+  --font-sans: "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Noto Sans KR", ui-monospace, monospace;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(242, 241, 236, 0.42), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(45, 41, 31, 0.06), transparent 46%);
+  background-attachment: fixed;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 0;
+  word-break: keep-all;
+}
+
+/* 숫자는 항상 같은 폭으로 정렬 */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* 절취선 마스크가 그림자를 잘라내므로, 부모에서 drop-shadow로 종이 두께를 만든다 */
+.receipt-wrap {
+  filter: drop-shadow(0 12px 20px rgba(45, 41, 31, 0.12));
+}
+
+/* 영수증 상단/하단 톱니 절취선 */
+.tear-bottom {
+  --tear-w: 18px;
+  --tear-h: 9px;
+  -webkit-mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom /
+      var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tear-h)) no-repeat;
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom /
+      var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--tear-h)) no-repeat;
+}
+
+.tear-top {
+  --tear-w: 18px;
+  --tear-h: 9px;
+  -webkit-mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top /
+      var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--tear-h)) no-repeat;
+  mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top /
+      var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--tear-h)) no-repeat;
+}
+
+/* 항목 ····· 값 점선 연결 */
+.leader {
+  flex: 1 1 auto;
+  min-width: 12px;
+  align-self: center;
+  border-bottom: 1px dotted var(--color-rule);
+  margin: 0 6px;
+  transform: translateY(-3px);
+}
+
+.rule-dotted {
+  border-top: 1px dashed var(--color-rule);
+}
+
+/* 모노 라벨: 자간을 넓힌 대문자 */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+/* 모션: 종이가 인쇄되어 톡톡 쌓이는 느낌 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes grow-bar {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes draw-line {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.rise {
+  animation: rise 0.22s ease-out both;
+}
+
+.grow-bar {
+  transform-origin: bottom;
+  animation: grow-bar 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.draw-line {
+  transform-origin: left;
+  animation: draw-line 0.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .grow-bar,
+  .draw-line {
+    animation: none;
+  }
+  * {
+    transition: none !important;
+  }
+}
+
+/* 폼 기본 */
+.field {
+  width: 100%;
+  background: var(--color-receipt);
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-ink);
+}
+
+.field:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 1px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 2px;
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-receipt);
+  border: 1px solid var(--color-ink);
+}
+
+.btn-primary:hover {
+  background: var(--color-teal);
+  border-color: var(--color-teal);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
