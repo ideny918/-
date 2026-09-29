@@ -1,7 +1,7 @@
-@import "tailwindcss";
+import "tailwindcss";
 
 /* 팬톤 11-0515 레몬 아이싱 · 11-4201 클라우드 댄서 · 웜 차콜 잉크 */
-@theme {
+theme {
   --color-paper: #f6ebc8;
   --color-paper-deep: #efe3b5;
   --color-receipt: #f2f1ec;
