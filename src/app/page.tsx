@@ -1,4 +1,4 @@
-// 메인 — 나날책방 영수증 대시보드
+// 메인 — 온새미로 영수증 대시보드
 import Link from "next/link";
 import {
   getEvents,
